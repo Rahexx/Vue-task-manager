@@ -1,35 +1,43 @@
-import { defineStore } from 'pinia';
-import axios from 'axios';
+import { defineStore } from 'pinia'
+import axios from 'axios'
 
-const API = import.meta.env.VITE_API_BASE_URL;
+const API = import.meta.env.VITE_API_BASE_URL
 
 interface User {
-  username: string;
-  name: string;
+  username: string
+  name: string
 }
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('token') || '',
-    user: null as User | null
+    user: null as User | null,
   }),
   actions: {
     async login(username: string, password: string) {
-      const res = await axios.post(`${API}/auth/login`, { username, password });
-      this.token = res.data.token;
-      localStorage.setItem('token', this.token);
+      const res = await axios.post(`${API}/auth/login`, { username, password })
+      this.token = res.data.token
+      localStorage.setItem('token', this.token)
     },
     async fetchProfile() {
       const res = await axios.get(`${API}/auth/profile`, {
-        headers: { Authorization: `Bearer ${this.token}` }
-      });
-      this.user = res.data;
+        headers: { Authorization: `Bearer ${this.token}` },
+      })
+      this.user = res.data
     },
     logout() {
-      this.token = '';
-      this.user = null;
-      localStorage.removeItem('token');
-    }
-  }
-});
-
+      this.token = ''
+      this.user = null
+      localStorage.removeItem('token')
+    },
+    async init() {
+      if (this.token && !this.user) {
+        try {
+          await this.fetchProfile()
+        } catch {
+          this.logout()
+        }
+      }
+    },
+  },
+})

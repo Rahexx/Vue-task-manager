@@ -8,7 +8,7 @@ interface Task {
   text: string
 }
 
-export const useTaskStore = defineStore('auth', {
+export const useTaskStore = defineStore('task', {
   state: () => ({ tasks: [] as Task[] }),
   actions: {
     async fetchTask() {
