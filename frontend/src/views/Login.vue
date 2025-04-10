@@ -22,7 +22,7 @@ const handleLogin = async () => {
 <template>
   <v-container>
     <v-form @submit.prevent="handleLogin">
-      <v-text-field v-model="username" label="Login" />
+      <v-text-field v-model="username" label="Login" aria-label="Login" />
       <v-text-field v-model="password" type="password" label="Hasło" />
       <v-btn type="submit">Zaloguj</v-btn>
     </v-form>
