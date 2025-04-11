@@ -3,7 +3,9 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "types": ["@vue/runtime-dom", "vite/client"]
+    "types": ["@vue/runtime-dom", "vite/client"],
+    "jsx": "preserve",
+    "skipLibCheck": true
   },
   "include": ["src"]
 }
